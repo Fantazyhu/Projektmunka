@@ -1,0 +1,26 @@
+{
+  "name": "projektmunka",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fantazyhu/Projektmunka.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Fantazyhu/Projektmunka/issues"
+  },
+  "homepage": "https://github.com/Fantazyhu/Projektmunka#readme",
+  "devDependencies": {
+    "@types/node": "^25.2.0",
+    "@types/typescript": "^0.4.29",
+    "typescript": "^5.9.3"
+  }
+}
