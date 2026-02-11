@@ -1,21 +1,26 @@
-body{margin: 0; padding: 0; box-sizing: border-box;}
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-body{
+body {
     background-image: url(./pics/pexels-enrique72-31746829.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     color: rgb(217, 217, 217);
 }
 
-header{
-    background-color: rgba(0, 51, 102, 0.75);
+
+header {
+    background-color: rgba(1, 74, 146, 0.75);
     padding: 15px 20px;
     display: flex;
     justify-content: center;
     gap: 10px;
-  }
+}
 
-  #city-input {
+#city-input {
     padding: 10px 15px;
     border-radius: 5px;
     border: none;
@@ -23,9 +28,9 @@ header{
     font-size: 1rem;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  }
+}
 
-  .button-search {
+.button-search {
     background-color: #003366;
     color: white;
     border: none;
@@ -35,10 +40,10 @@ header{
     font-weight: 600;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  }
+}
 
-  .container {
-    background-color: rgba(0, 51, 102, 0.75);
+.container {
+    background-color: rgba(1, 74, 146, 0.75);
     border-radius: 15px;
     padding: 25px;
     max-width: 1000px;
@@ -49,126 +54,197 @@ header{
     gap: 20px;
     margin: 0 auto;
     margin-top: 2rem;
-  }
+}
 
-  /* Bal oldali blokk: hőmérséklet és alap info */
-  .left-panel {
+/* Bal oldali blokk: hőmérséklet és alap info */
+.left-panel {
     flex: 1 1 300px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-  }
+}
 
-  .temp-box {
+.temp-box {
     background-color: rgba(255 255 255 / 0.15);
     border-radius: 15px;
     padding: 30px 40px;
     display: flex;
     align-items: center;
     gap: 20px;
-  }
-  .temp-box .temp {
+}
+
+.temp-box .temp {
     font-size: 5rem;
     font-weight: 700;
     line-height: 1;
-  }
-  .temp-box .location-info {
+}
+
+.temp-box .location-info {
     flex-grow: 1;
-  }
-  .location-info h1 {
+}
+
+.location-info h1 {
     margin: 0;
     font-size: 2.2rem;
     font-weight: 700;
-  }
-  .location-info p {
+}
+
+.location-info p {
     margin: 5px 0 0 0;
     font-size: 0.9rem;
     font-weight: 500;
-  }
-  .weather-icon {
-    font-size: 2.5rem;
-  }
+}
 
-  /* Páratartalom dobozok */
-  .humidity-container {
+.weather-icon {
+    font-size: 2.5rem;
+}
+
+/* Páratartalom dobozok */
+.humidity-container {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
-  }
-  .humidity-box {
+}
+
+.humidity-box {
     background-color: rgba(255 255 255 / 0.15);
     border-radius: 15px;
     padding: 15px 25px;
     flex: 1 1 120px;
     text-align: center;
     font-weight: 600;
-  }
-  .humidity-box h3 {
+}
+
+.humidity-box h3 {
     margin: 0 0 5px 0;
     font-size: 1.1rem;
-  }
-  .humidity-box .humidity-icon {
+}
+
+.humidity-box .humidity-icon {
     font-size: 2rem;
     margin-bottom: 5px;
-  }
+}
 
-  /* Jobb oldali blokk: grafikon */
-  .right-panel {
+/* Jobb oldali blokk: grafikon */
+.right-panel {
     flex: 2 1 600px;
     background-color: rgba(255 255 255 / 0.15);
     border-radius: 15px;
     padding: 20px 30px;
     display: flex;
     flex-direction: column;
-  }
+}
 
-  .right-panel h2 {
+.right-panel h2 {
     margin: 0 0 10px 0;
     font-weight: 700;
-  }
+}
 
-  /* Egyszerű vonal grafikon stílus */
-  .chart {
+/* Egyszerű vonal grafikon stílus */
+.chart {
     position: relative;
     height: 200px;
     width: 100%;
-    background: rgba(0,0,0,0.15);
+    background: rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     margin-top: 10px;
-  }
+}
 
-  /* Alul időpont jelölés */
-  .time-labels {
+/* Alul időpont jelölés */
+.time-labels {
     display: flex;
     justify-content: space-between;
     margin-top: 8px;
     font-size: 0.8rem;
-  }
+}
 
-  /* Lábjegyzet */
-  footer {
+/* Lábjegyzet */
+footer {
     margin-top: 25px;
     font-size: 0.75rem;
     text-align: center;
     opacity: 0.8;
-  }
+}
 
-  /* Egyszerű ikonok helyett emoji használva */
-  .sun-icon::before {
-    content: "☀️";
-  }
-  .cloud-icon::before {
-    content: "☁️";
-  }
-  .mist-icon::before {
-    content: "🌫️";
-  }
-  .humidity-icon::before {
-    content: "💧";
-  }
-  .wind-icon::before {
-    content: "💨";
-  }
-  .pressure-icon::before {
-    content: "🔽";
-  }
+/* Egyszerű ikonok helyett emoji használva */
+.sun-icon::before { content: "☀️"; }
+.cloud-icon::before { content: "☁️"; }
+.mist-icon::before { content: "🌫️"; }
+.humidity-icon::before { content: "💧"; }
+.wind-icon::before { content: "💨"; }
+.pressure-icon::before { content: "🔽"; }
+
+
+/* ----------------------------------------------------------- */
+/* ÚJ RÉSZ: Reszponzivitás (Media Queries)                     */
+/* ----------------------------------------------------------- */
+
+/* Tablet és kisebb laptopok (max 992px) */
+@media (max-width: 992px) {
+    .container {
+        /* Kisebb padding, hogy több hely maradjon */
+        padding: 20px;
+        width: 90%;
+    }
+    
+    /* A jobb oldali panel engedje, hogy összenyomják vagy új sorba kerüljön */
+    .right-panel {
+        flex-basis: 100%;
+    }
+}
+
+/* Mobil nézet (max 600px) */
+@media (max-width: 600px) {
+    
+    /* Fejléc átalakítása: egymás alá kerül a kereső és a gomb */
+    header {
+        flex-direction: column;
+        align-items: stretch; /* Teljes szélesség kitöltése */
+    }
+
+    #city-input {
+        width: 100%; /* Fix 250px helyett teljes szélesség */
+        box-sizing: border-box; /* Padding ne növelje a méretet */
+        margin-bottom: 10px;
+    }
+
+    .button-search {
+        width: 100%;
+    }
+
+    /* Fő konténer margó és padding csökkentése */
+    .container {
+        margin-top: 1rem;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    /* A panelek töltsék ki a teljes szélességet */
+    .left-panel, .right-panel {
+        flex: 1 1 100%;
+    }
+
+    /* Hőmérséklet doboz átalakítása */
+    .temp-box {
+        flex-direction: column; /* Ikon és szöveg egymás alá */
+        text-align: center;
+        padding: 20px;
+    }
+
+    .temp-box .temp {
+        font-size: 4rem; /* Kisebb betűméret, hogy kiférjen */
+    }
+    
+    .location-info h1 {
+        font-size: 1.8rem;
+    }
+
+    .weather-icon {
+        margin-top: 10px;
+    }
+
+    /* Grafikon panel padding csökkentése */
+    .right-panel {
+        padding: 15px;
+    }
+}
