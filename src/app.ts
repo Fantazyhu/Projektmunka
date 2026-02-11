@@ -50,5 +50,20 @@ async function fetchWeather(city: string): Promise<void> {
     }
 }
 
+function btnHandler(){
+    const btn = document.querySelector(".button-search") as HTMLButtonElement;
+    btn.addEventListener("click", () => {
+        const city = getCityName();
+        fetchWeather(city);
+    });
+}
+
+function getCityName(){
+    const cityName = document.getElementById('cityInput') as HTMLInputElement;
+    const value = cityName.value;
+    return value;
+}
+
 // ===== MEGHÍVÁS =====
 fetchWeather('Gyöngyös');
+console.log(getCityName());
