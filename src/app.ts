@@ -1,100 +1,114 @@
-// 1. TÍPUS DEFINÍCIÓK (INTERFACES)
+const apiKey = '6533f1027154a42ba4e38e655f640fb0';
 
-interface WeatherCondition {
-    description: string;
-    icon: string;
+// 1. Típusok
+interface WeatherData {
+    city: { name: string };
+    list: {
+        dt_txt: string;
+        main: { temp: number; humidity: number; pressure: number };
+        weather: { icon: string; description: string }[];
+        wind: { speed: number };
+    }[];
 }
 
-interface MainData {
-    temp: number;
-    humidity: number;
-    feels_like: number;
-}
-
-// Egy 3 órás időblokk adata
-interface ForecastItem {
-    dt: number;
-    dt_txt: string; // Pl: "2023-10-25 15:00:00"
-    main: MainData;
-    weather: WeatherCondition[];
-}
-
-// A teljes API válasz szerkezete
-interface ForecastResponse {
-    cod: string;
-    city: {
-        name: string;
-        country: string;
-    };
-    list: ForecastItem[]; // Ez a lista tartalmazza a jövőbeli adatokat
-}
-
-
-// 2. ADATLEKÉRÉS (FORECAST)
-
-async function fetchWeatherForecast(city: string): Promise<void> {
-    const apiKey = '6533f1027154a42ba4e38e655f640fb0';
-    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}&lang=hu`;
-
+// 2. Lekérés
+async function getWeather(city: string): Promise<WeatherData | null> {
     try {
-        const response = await fetch(apiUrl);
-
-        if (!response.ok) {
-            throw new Error(`Hiba! Státusz: ${response.status} - Város nem található?`);
-        }
-
-        const data: ForecastResponse = await response.json();
-        console.log(`Időjárás előrejelzés: ${data.city.name} (${data.city.country})`);
-
-        // Végigmegyünk a listán (az API 5 napot ad vissza, 3 órás bontásban)
-        // A data.list egy tömb 40 elemmel.
-        data.list.forEach((item) => {
-            const dateObj = new Date(item.dt_txt);
-            
-            // Dátum és idő formázása magyarul (Pl: Hétfő, 14:00)
-            const dayName = dateObj.toLocaleDateString('hu-HU', { weekday: 'long' });
-            const time = dateObj.toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit' });
-            const fullDate = item.dt_txt.split(" ")[0]; // Csak a dátum (YYYY-MM-DD)
-
-            const temp = item.main.temp.toFixed(1); // 1 tizedesjegy
-            const desc = item.weather[0]!.description;
-
-            // Kiíratás a konzolra szép formátumban
-            console.log(` ${fullDate} (${dayName})  ${time} ->  ${temp}°C, ${desc}`);
-        });
-
-        console.log("==================================================");
-
-    } catch (error) {
-        console.error('Hiba történt az API hívása közben:', error);
+        const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}&lang=hu`);
+        if (!res.ok) throw new Error();
+        return await res.json();
+    } catch (err) {
+        console.error(err);
+        return null;
     }
 }
 
-
-// 3. DOM KEZELÉS ÉS ESEMÉNYEK
-
-
-function getCityName(): string {
-    const cityNameInput = document.getElementById('cityInput') as HTMLInputElement;
-    return cityNameInput ? cityNameInput.value : "";
-}
-
-function initApp(): void {
-    const btn = document.querySelector(".button-search") as HTMLButtonElement;
+// 3. Megjelenítés
+const showData = (data: WeatherData): void => {
+    const current = data.list[0];
     
-    // Csak akkor adjuk hozzá az eseményt, ha létezik a gomb (biztonság)
-    if (btn) {
-        btn.addEventListener("click", () => {
-            const city = getCityName();
-            if (city.trim().length > 0) {
-                fetchWeatherForecast(city);
-            } else {
-                console.warn("Kérlek adj meg egy városnevet!");
-            }
-        });
-    }
+    // Ha véletlenül nincs adat, ne fusson tovább (ez az első védelem)
+    if (!current) return;
 
+    // Ikon kiválasztása biztonságosan (weather[0] után kérdőjel!)
+    const iconCode = current.weather[0]?.icon || '01d'; 
+    const iconClass = iconCode.startsWith('01') ? 'sun-icon' : (iconCode.startsWith('50') ? 'mist-icon' : 'cloud-icon');
+
+    // Felső panel
+    const topPanel = document.querySelector('.top-panel') as HTMLElement;
+    
+    // Páratartalom dobozok (Ma, Holnap, Holnapután)
+    const humidityHtml = [0, 8, 16].map((idx, i) => {
+        const item = data.list[idx];
+        
+        // Ha nincs item (pl. a lista rövidebb), üres stringet adunk vissza
+        if (!item) return ''; 
+
+        const dayName = i === 0 ? "Ma" : new Date(item.dt_txt).toLocaleDateString('hu-HU', { month: 'short', day: 'numeric' });
+        
+        return `
+            <div class="humidity-box">
+                <div class="${iconClass}"></div>
+                <h3>${dayName}</h3>
+                <div>Páratartalom ${item.main.humidity}%</div>
+            </div>`;
+    }).join("");
+
+    topPanel.innerHTML = `
+        <div class="temp-box">
+            <div class="temp">${Math.round(current.main.temp)}°C</div>
+            <div class="location-info">
+                <h1>${data.city.name}</h1>
+                <p>${new Date().toLocaleTimeString('hu-HU', {hour:'2-digit', minute:'2-digit'})} - <br />
+                   ${new Date(current.dt_txt).toLocaleDateString('hu-HU', {weekday:'long', month:'long', day:'numeric'})}</p>
+            </div>
+            <div class="weather-icon ${iconClass}" title="${current.weather[0]?.description}"></div>
+        </div>
+
+        <div class="humidity-container">
+            ${humidityHtml}
+        </div>
+
+        <footer>
+            <span class="pressure-icon"></span> Légnyomás ${current.main.pressure} mb &nbsp;&nbsp; 
+            <span class="wind-icon"></span> Szél ${current.wind.speed} km/h
+        </footer>
+    `;
+
+    // Lenti panel
+    const chart = document.querySelector('.chart') as HTMLElement;
+    const labels = document.querySelector('.time-labels') as HTMLElement;
+    
+    chart.style.cssText = "display: flex; align-items: flex-end; height: 150px;";
+
+    chart.innerHTML = data.list.slice(0, 8).map(item => `
+        <div class="bar" style="height: ${Math.max(10, Math.round(item.main.temp) * 4)}px; width: 100%; margin: 0 2px; opacity: 0.6; position: relative;">
+            <span class="temps" style="position:absolute; top:-20px; left:50%; transform:translate(-50%)">${Math.round(item.main.temp)}°</span>
+        </div>
+    `).join("");
+
+    labels.innerHTML = data.list.slice(0, 8).map(item => `
+        <span>${new Date(item.dt_txt).toLocaleTimeString('hu-HU', {hour:'2-digit', minute:'2-digit'})}</span>
+    `).join("");
 }
 
-// 4. PROGRAM INDÍTÁSA
-initApp();
+// 4. Indítás
+const init = async () => {
+    // Alapértelmezett
+    const startData = await getWeather('Gyöngyös');
+    if (startData) showData(startData);
+
+    // Keresés
+    const button = document.querySelector('.button-search')
+    button!.addEventListener('click', async (e) => {
+        e.preventDefault();
+        let city = (document.getElementById('city-input') as HTMLInputElement).value;
+        if (city) {
+            const data = await getWeather(city);
+            if (data) showData(data);
+            (document.getElementById('city-input') as HTMLInputElement).value = "";
+        }
+    });
+};
+
+init();
