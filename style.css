@@ -47,7 +47,7 @@ header {
 }
 
 .container {
-    background-color: rgba(139, 139, 139, 0.301);
+    background-color: rgba(83, 81, 81, 0.274);
     border-radius: 15px;
     padding: 25px;
     max-width: 1000px;
@@ -70,7 +70,7 @@ header {
 }
 
 .temp-box {
-    background-color: rgba(255 255 255 / 0.15);
+    background-color: rgba(34, 32, 32, 0.192);
     border-radius: 15px;
     padding: 30px 40px;
     display: flex;
@@ -112,7 +112,7 @@ header {
 }
 
 .humidity-box {
-    background-color: rgba(255 255 255 / 0.15);
+    background-color: rgba(31, 26, 26, 0.15);
     border-radius: 15px;
     padding: 15px 25px;
     flex: 1 1 120px;
@@ -132,7 +132,7 @@ header {
 
 .bottom-panel {
     flex: 2 1 600px;
-    background-color: rgba(255 255 255 / 0.15);
+    background-color: rgba(61, 60, 60, 0.123);
     border-radius: 15px;
     padding: 20px 30px;
     display: flex;
@@ -188,11 +188,9 @@ footer {
 .pressure-icon::before { content: "🔽"; }
 
 
-/* ----------------------------------------------------------- */
-/* ÚJ RÉSZ: Reszponzivitás (Media Queries)                     */
-/* ----------------------------------------------------------- */
 
-/* Tablet és kisebb laptopok (max 992px) */
+/* Reszponzivitás         */
+
 @media (max-width: 992px) {
     .container {
         /* Kisebb padding, hogy több hely maradjon */
@@ -206,7 +204,7 @@ footer {
     }
 }
 
-/* Mobil nézet (max 600px) */
+
 @media (max-width: 600px) {
     
     /* Fejléc átalakítása: egymás alá kerül a kereső és a gomb */
@@ -216,7 +214,7 @@ footer {
     }
 
     #city-input {
-        width: 100%; /* Fix 250px helyett teljes szélesség */
+        width: 100%; 
         box-sizing: border-box; /* Padding ne növelje a méretet */
         margin-bottom: 10px;
     }
