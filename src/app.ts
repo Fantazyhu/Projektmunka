@@ -100,15 +100,17 @@ const init = async () => {
 
     // Keresés
     const button = document.querySelector('.button-search')
-    button!.addEventListener('click', async (e) => {
-        e.preventDefault();
-        let city = (document.getElementById('city-input') as HTMLInputElement).value;
-        if (city) {
-            const data = await getWeather(city);
-            if (data) showData(data);
-            (document.getElementById('city-input') as HTMLInputElement).value = "";
-        }
-    });
+    if (button){
+        button.addEventListener('click', async (e) => {
+            let city = (document.getElementById('city-input') as HTMLInputElement).value;
+            if (city) {
+                const data = await getWeather(city);
+                if (data) showData(data);
+                (document.getElementById('city-input') as HTMLInputElement).value = "";
+            }
+        });
+    }
+
 };
 
 init();
